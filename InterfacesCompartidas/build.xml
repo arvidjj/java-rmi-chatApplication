@@ -1,0 +1,42 @@
+<project name="InterfacesCompartidas" default="jar" basedir=".">
+
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="lib.dir" value="lib" />
+	<property name="server.interface" location="src/fiuni/sd/rmi/IChatServer.java" />
+	<property name="client.interface" location="src/fiuni/sd/rmi/IClientCallback.java" />
+	<property name="config.dir" value="src/config" />
+	<property name="jar.dir" value="jar" />
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+		</fileset>
+	</path>
+
+	<target name="compile">
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+
+		<mkdir dir="${jar.dir}" />
+
+		<jar destfile="${jar.dir}/IChatServer.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${server.interface}" />
+			</manifest>
+		</jar>
+
+		<jar destfile="${jar.dir}/IClientCallback.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${client.interface}" />
+			</manifest>
+		</jar>
+	</target>
+
+
+
+</project>
