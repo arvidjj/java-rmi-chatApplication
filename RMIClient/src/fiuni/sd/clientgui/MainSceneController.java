@@ -53,7 +53,11 @@ public class MainSceneController {
 	@FXML
 	public void enviarMensaje(ActionEvent event) throws RemoteException {
 		String mensaje = inputMensaje.getText();
-	    chatClient.enviarMensaje(mensaje, nombre);
+		if (mensaje.length()>0) {
+			chatClient.enviarMensaje(mensaje, nombre);
+		    inputMensaje.setText("");
+		}
+	    
 	}
 	
 	// Event Listener on Button.onAction

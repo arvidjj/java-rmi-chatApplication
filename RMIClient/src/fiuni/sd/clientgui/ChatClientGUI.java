@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import utils.Loggeador;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -13,7 +14,8 @@ public class ChatClientGUI extends Application {
     
 	@Override
 	public void start(Stage primaryStage) throws RemoteException, NotBoundException {
-
+		Loggeador log = new Loggeador();; //logger
+		
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
 			Scene scene = new Scene(root);
@@ -22,7 +24,7 @@ public class ChatClientGUI extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
-			e.printStackTrace();
+			log.loggearError(e.getMessage());
 		}
 	}
 	

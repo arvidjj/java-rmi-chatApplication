@@ -9,15 +9,20 @@ import java.util.function.Consumer;
 
 import fiuni.sd.clientgui.MainSceneController;
 import fiuni.sd.rmi.IChatServer;
+import utils.Configurator;
+import utils.Loggeador;
 
 public class ChatClient {
     private IChatServer chatServer; //Interfaz remota del servidor
     private IClientCallback clientCallback; //Callback del cliente
     private MainSceneController guiController;
+    private Configurator configuracion = new Configurator("src/config/config.properties");
+    private final Loggeador log; //logger
     
     public ChatClient(MainSceneController guiController) throws RemoteException, NotBoundException {
     	
-    	this.guiController = guiController;
+    	this.log = new Loggeador();
+		this.guiController = guiController;
     	clientCallback = new ClientCallbackImpl(guiController);
     }
 
@@ -26,18 +31,18 @@ public class ChatClient {
     }
     
     public void conectar(String username) throws RemoteException, NotBoundException {
-    	Registry registry = LocateRegistry.getRegistry("localhost", 1099);
+    	Registry registry = LocateRegistry.getRegistry(configuracion.getProperty("direccion"), configuracion.getIntProperty("puerto"));
 		chatServer = (IChatServer) registry.lookup("ChatServer");
 		
 		System.out.println("conectando...");
+		log.loggear(username + " conectando al servidor...");
     	chatServer.conectar(username, clientCallback);
     }
     public void desconectar() throws RemoteException, NotBoundException {
 		
 		System.out.println("desconectando...");
+		log.loggear("Desconectando del servidor...");
     	chatServer.desconectar(clientCallback);
-    }
-    public void setMensajeReceiver(Consumer<String> receiver) {
     }
     
     public List<String> obtenerListaClientesConectados() throws RemoteException {
