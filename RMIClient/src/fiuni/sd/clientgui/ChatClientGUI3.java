@@ -160,9 +160,16 @@ public class ChatClientGUI3 {
 		panel.add(chatTexto);
 	}
 	
-	public void actualizarUsuarios(List<String> listaUsuarios) throws RemoteException {
-		
-    }
+	public void actualizarUsuarios(List<String> listaUsuarios) {
+	    /*SwingUtilities.invokeLater(() -> {
+	        DefaultListModel<String> listModel = new DefaultListModel<>();
+	        for (String user : listaUsuarios) {
+	            listModel.addElement(user);
+	        }
+	        listaUsuarios.setModel(listModel); // Assuming listaUsuarios is your JList
+	    });*/
+	}
+
 	
 	public void mostrarAvisoEnGui(String mensaje) {
 		chatTexto.append(mensaje + "\n");

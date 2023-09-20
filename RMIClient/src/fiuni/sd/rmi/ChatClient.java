@@ -7,22 +7,21 @@ import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.function.Consumer;
 
-import fiuni.sd.clientgui.MainSceneController;
-import fiuni.sd.rmi.IChatServer;
+import fiuni.sd.clientgui.ChatClientGUI3;
 import utils.Configurator;
 import utils.Loggeador;
 
 public class ChatClient {
     private IChatServer chatServer; //Interfaz remota del servidor
     private IClientCallback clientCallback; //Callback del cliente
-    private MainSceneController guiController;
+    private ChatClientGUI3 gui;
     private Configurator configuracion = new Configurator("src/config/config.properties");
     private final Loggeador log; //logger
     
-    public ChatClient(MainSceneController guiController) throws RemoteException, NotBoundException {
+    public ChatClient(ChatClientGUI3 guiController) throws RemoteException, NotBoundException {
     	
     	this.log = new Loggeador();
-		this.guiController = guiController;
+		this.gui = guiController;
     	clientCallback = new ClientCallbackImpl(guiController);
     }
 
