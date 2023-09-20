@@ -24,7 +24,8 @@
 	<target name="run-server" description="servidor" depends="java-compile">
 		<echo>corriendo server</echo>
 		<java fork="true" classname="${main.class}" failonerror="true">
-			<classpath>
+			<arg value="1099" /> <!-- argumento del puerto -->
+			<classpath> 
 				<pathelement location="${build.dir}" />
 				<path refid="classpath" />
 				<path refid="properties" />

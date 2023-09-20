@@ -30,7 +30,7 @@ public class ChatClientGUI3 {
 	private JFrame frame;
 	private JTextField enviarTexto;
 	private JTextField nombreInput;
-	private JList listaUsuarios;
+	private JList<String> listaUsuarios;
 	private JTextArea chatTexto;
 	private JButton enviarButton;
 	private JButton conectarButton;
@@ -46,10 +46,18 @@ public class ChatClientGUI3 {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		if (args.length != 2) {
+	        System.err.println("Uso: java fiuni.sd.clientgui.ChatClientGUI3 rmiHostName rmiPort");
+	        System.exit(1);
+	    }
+
+	    String rmiHostName = args[0];
+	    int rmiPort = Integer.parseInt(args[1]);
+	    
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ChatClientGUI3 window = new ChatClientGUI3();
+					 ChatClientGUI3 window = new ChatClientGUI3(rmiHostName, rmiPort);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -61,12 +69,12 @@ public class ChatClientGUI3 {
 	/**
 	 * Create the application.
 	 */
-	public ChatClientGUI3() {
+	public ChatClientGUI3(String rmiHostName, int rmiPort) {
 		Loggeador log = new Loggeador(); //logger
 
 		initialize();
 		try {
-			chatClient = new ChatClient(this);
+			chatClient = new ChatClient(this, rmiHostName, rmiPort);
 		} catch (RemoteException e) {
 			log.loggearError(e.getMessage());
 		} catch (NotBoundException e) {
@@ -108,7 +116,7 @@ public class ChatClientGUI3 {
 		
 		DefaultListModel<String> listModel = new DefaultListModel<>();
 		listaUsuarios = new JList<>(listModel);
-		listaUsuarios.setBounds(434, 60, 181, 346);
+		listaUsuarios.setBounds(434, 60, 190, 346);
 		frame.getContentPane().add(listaUsuarios);
 		
 		conectarButton = new JButton("Conectar");
@@ -141,7 +149,7 @@ public class ChatClientGUI3 {
             }
         });
 		
-		conectarButton.setBounds(540, 26, 77, 23);
+		conectarButton.setBounds(533, 26, 93, 23);
 		frame.getContentPane().add(conectarButton);
 		
 		nombreInput = new JTextField();
@@ -160,14 +168,14 @@ public class ChatClientGUI3 {
 		panel.add(chatTexto);
 	}
 	
-	public void actualizarUsuarios(List<String> listaUsuarios) {
-	    /*SwingUtilities.invokeLater(() -> {
+	public void actualizarUsuarios(List<String> listaRecibida) {
+	    SwingUtilities.invokeLater(() -> {
 	        DefaultListModel<String> listModel = new DefaultListModel<>();
-	        for (String user : listaUsuarios) {
+	        for (String user : listaRecibida) {
 	            listModel.addElement(user);
 	        }
 	        listaUsuarios.setModel(listModel); // Assuming listaUsuarios is your JList
-	    });*/
+	    });
 	}
 
 	

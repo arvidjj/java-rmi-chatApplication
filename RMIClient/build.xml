@@ -24,6 +24,8 @@
 	<target name="run-client" description="servidor" depends="java-compile">
 		<echo>corriendo cliente</echo>
 		<java fork="true" classname="${main.class}" failonerror="true">
+			<arg value="localhost" />
+			<arg value="1099" />
 			<classpath>
 				<pathelement location="${build.dir}" />
 				<path refid="classpath" />

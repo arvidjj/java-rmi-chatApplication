@@ -5,7 +5,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.List;
-import java.util.function.Consumer;
 
 import fiuni.sd.clientgui.ChatClientGUI3;
 import utils.Configurator;
@@ -17,12 +16,17 @@ public class ChatClient {
     private ChatClientGUI3 gui;
     private Configurator configuracion = new Configurator("src/config/config.properties");
     private final Loggeador log; //logger
+    private String rmiHostName;
+    private int rmiPort;
     
-    public ChatClient(ChatClientGUI3 guiController) throws RemoteException, NotBoundException {
+    public ChatClient(ChatClientGUI3 guiController, String rmiHostName, int rmiPort) throws RemoteException, NotBoundException {
     	
     	this.log = new Loggeador();
 		this.gui = guiController;
     	clientCallback = new ClientCallbackImpl(guiController);
+    	
+    	this.rmiHostName = rmiHostName;
+    	this.rmiPort = rmiPort;
     }
 
     public void enviarMensaje(String mensaje, String username) throws RemoteException {
@@ -30,8 +34,12 @@ public class ChatClient {
     }
     
     public void conectar(String username) throws RemoteException, NotBoundException {
-    	Registry registry = LocateRegistry.getRegistry(configuracion.getProperty("direccion"), configuracion.getIntProperty("puerto"));
-		chatServer = (IChatServer) registry.lookup("ChatServer");
+    	//Registry registry = LocateRegistry.getRegistry(configuracion.getProperty("direccion"), configuracion.getIntProperty("puerto"));
+    	
+    	String registryURL = "rmi://" + rmiHostName + ":" + rmiPort + "/";
+    	Registry registry = LocateRegistry.getRegistry(rmiHostName, rmiPort);
+    	
+    	chatServer = (IChatServer) registry.lookup("ChatServer");
 		
 		System.out.println("conectando...");
 		log.loggear(username + " conectando al servidor...");
