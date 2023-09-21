@@ -13,7 +13,6 @@ import utils.Loggeador;
 public class ChatClient {
     private IChatServer chatServer; //Interfaz remota del servidor
     private IClientCallback clientCallback; //Callback del cliente
-    private ChatClientGUI3 gui;
     private Configurator configuracion = new Configurator("src/config/config.properties");
     private final Loggeador log; //logger
     private String rmiHostName;
@@ -22,8 +21,7 @@ public class ChatClient {
     public ChatClient(ChatClientGUI3 guiController, String rmiHostName, int rmiPort) throws RemoteException, NotBoundException {
     	
     	this.log = new Loggeador();
-		this.gui = guiController;
-    	clientCallback = new ClientCallbackImpl(guiController);
+		clientCallback = new ClientCallbackImpl(guiController);
     	
     	this.rmiHostName = rmiHostName;
     	this.rmiPort = rmiPort;

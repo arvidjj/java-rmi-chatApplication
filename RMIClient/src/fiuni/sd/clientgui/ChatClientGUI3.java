@@ -164,6 +164,7 @@ public class ChatClientGUI3 {
 		panel.setLayout(null);
 		
 		chatTexto = new JTextArea();
+		chatTexto.setLineWrap(true);
 		chatTexto.setEditable(false);
 		chatTexto.setBounds(0, 0, 404, 395);
 		panel.add(chatTexto);

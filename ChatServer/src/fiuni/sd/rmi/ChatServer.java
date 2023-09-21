@@ -21,7 +21,7 @@ public class ChatServer {
     	
         try {
             //Registry registry = LocateRegistry.createRegistry(configuracion.getIntProperty("puerto"));
-        	System.setProperty("java.rmi.server.hostname", "192.168.0.12");
+        	System.setProperty("java.rmi.server.hostname", configuracion.getProperty("direccion"));
         	Registry registry = LocateRegistry.createRegistry(rmiPort, null, null);
             
             IChatServer chatServer = new ChatServerImpl();

@@ -20,12 +20,12 @@
 		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" includeantruntime="false" />
 	</target>
 
-	<!-- ejecutar servidor -->
-	<target name="run-client" description="servidor" depends="java-compile">
+	<!-- ejecutar cliente -->
+	<target name="run-client" description="cliente" depends="java-compile">
 		<echo>corriendo cliente</echo>
 		<java fork="true" classname="${main.class}" failonerror="true">
 			<arg value="localhost" />
-			<arg value="1099" />
+			<arg value="8080" />
 			<classpath>
 				<pathelement location="${build.dir}" />
 				<path refid="classpath" />
