@@ -74,6 +74,7 @@ public class ChatClientGUI3 {
 
 		initialize();
 		try {
+			System.out.println("Conectando a : "+ rmiHostName + ":" + rmiPort);
 			chatClient = new ChatClient(this, rmiHostName, rmiPort);
 		} catch (RemoteException e) {
 			log.loggearError(e.getMessage());
